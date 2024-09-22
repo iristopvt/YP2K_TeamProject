@@ -145,5 +145,11 @@
     <ClInclude Include="..\..\Source\Prototype\UI\SkillWidget_test.h">
       <Filter>Source\Prototype\UI</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Prototype\UI\StatWidget.cpp">
+      <Filter>Source\Prototype\UI</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Prototype\UI\StatWidget.h">
+      <Filter>Source\Prototype\UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
