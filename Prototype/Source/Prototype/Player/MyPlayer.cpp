@@ -9,6 +9,11 @@
 #include "../Item/Equip/Armor_test.h"
 #include "../UI/SkillWidget_test.h"
 
+//chelo
+#include "Component/StatComponent.h"
+#include "UI/StatWidget.h"
+#include "Components/WidgetComponent.h"
+
 // Sets default values
 AMyPlayer::AMyPlayer()
 {
@@ -33,6 +38,18 @@ AMyPlayer::AMyPlayer()
 
 	//_parkourComp = CreateDefaultSubobject<UParkourComponent_Test>(TEXT("ParkourComponent"));
 
+	//cheol
+	_StatCom = CreateDefaultSubobject<UStatComponent>(TEXT("StatCom"));
+
+	static ConstructorHelpers::FClassFinder<UStatWidget> StatClass(
+	TEXT("/Script/UMGEditor.WidgetBlueprint'/Game/Blueprint/UI/PlayerStat_UI.PlayerStat_UI_C'"));
+
+	if (StatClass.Succeeded())
+	{
+		_statWidget = CreateWidget<UStatWidget>(GetWorld(), StatClass.Class);
+	}
+	
+
 	_dashDistance = 1000.f;
 	_dashSpeed = 3000.f;
 	bIsDashing = false;
@@ -52,11 +69,22 @@ void AMyPlayer::BeginPlay()
 	}
 	SkillOnCooldown.Init(false, 4);
 	Equipment.Init(nullptr,6);
+
+	if (_statWidget)
+	{
+		_statWidget->AddToViewport();
+		_statWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
+
+
 }
 
 void AMyPlayer::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
+	_StatCom->SetLevelAndInit(1);
+
 }
 
 // Called every frame
@@ -84,6 +112,9 @@ void AMyPlayer::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 		EnhancedInputComponent->BindAction(_skill2Action, ETriggerEvent::Started, this, &AMyPlayer::Skill2);
 		EnhancedInputComponent->BindAction(_skill3Action, ETriggerEvent::Started, this, &AMyPlayer::Skill3);
 		EnhancedInputComponent->BindAction(_skill4Action, ETriggerEvent::Started, this, &AMyPlayer::Skill4);
+		EnhancedInputComponent->BindAction(_mouseAction, ETriggerEvent::Triggered, this, &AMyPlayer::Mouse);
+		EnhancedInputComponent->BindAction(_StatOpenAction, ETriggerEvent::Started, this, &AMyPlayer::StatUIOpen);
+
 	}
 }
 
@@ -196,6 +227,48 @@ void AMyPlayer::Skill4(const FInputActionValue &value)
 		{
 			SkillOnCooldown[3] = true;
 			_skillWidgetInstance->StartCooldown(3, 10.0f);
+		}
+	}
+}
+
+void AMyPlayer::Mouse(const FInputActionValue& value)
+{
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+
+	if (PlayerController)
+	{
+		bool bIsCursorVisible = PlayerController->bShowMouseCursor;
+
+		if (bIsCursorVisible)
+		{
+			PlayerController->bShowMouseCursor = false;
+			PlayerController->SetInputMode(FInputModeGameOnly());
+		}
+		else
+		{
+			PlayerController->bShowMouseCursor = true;
+			PlayerController->SetInputMode(FInputModeGameAndUI().SetHideCursorDuringCapture(false));
+		}
+	}
+}
+
+//cheol
+void AMyPlayer::StatUIOpen(const FInputActionValue& value)
+{
+	bool isPressed = value.Get<bool>();
+	
+	UE_LOG(LogTemp, Error, TEXT("StatUI Errow"));
+
+	if (isPressed && _statWidget != nullptr)
+	{
+		if (_statWidget->IsVisible())
+		{
+			_statWidget->SetVisibility(ESlateVisibility::Hidden);
+		}
+		else
+		{
+			_statWidget->SetVisibility(ESlateVisibility::Visible);
+
 		}
 	}
 }

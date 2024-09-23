@@ -2,6 +2,7 @@
 
 
 #include "Component/StatComponent.h"
+#include "Player/MyPlayerController.h"
 
 // Sets default values for this component's properties
 UStatComponent::UStatComponent()
@@ -31,6 +32,8 @@ void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 
 	// ...
 }
+
+
 
 
 

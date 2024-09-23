@@ -28,10 +28,10 @@ struct FMyStatData : public FTableRowBase
 	int32 maxMP;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Str;
+	int32 STR;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 Dex;
+	int32 DEX;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 INT;
@@ -46,8 +46,8 @@ struct FMyStatData : public FTableRowBase
 		: level(1)
 		, maxHP(100)
 		, maxMP(50)
-		, Str(10)
-		, Dex(10)
+		, STR(10)
+		, DEX(10)
 		, INT(10)
 		,BonusPoint(0)
 		,EXP(100) {}
@@ -79,6 +79,7 @@ public:
 	float HpRatio() { return _curHp / (float)_maxHp; }
 
 
+
 	void SetHp(int32 hp);
 	void SetMp(int32 mp);
 	int AddCurHp(int32 amount);
@@ -97,6 +98,7 @@ public:
 	PlMP _PlMPDelegate;
 	PIEXP _PlEXPDelegate;
 	PILevel _PILevelDelegate;
+	FMyStatData* data;
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = true))
@@ -125,5 +127,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = true))
 	int32 _nextExp;
+
+
+
 
 };

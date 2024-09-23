@@ -50,7 +50,9 @@ private:
 	void Skill2(const FInputActionValue& value);
 	void Skill3(const FInputActionValue& value);
 	void Skill4(const FInputActionValue& value);
-
+	 void Mouse(const FInputActionValue& value);
+	//cheol
+	void StatUIOpen(const FInputActionValue& value);
 
 	//void CheckForClimbableWall();
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Skill, meta = (AllowPrivateAccess = "true"))
@@ -92,6 +94,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* _skill4Action;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* _mouseAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* _StatOpenAction;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* _springArm;
 
@@ -103,6 +111,14 @@ public:
 
 	//  UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Parkour, meta = (AllowPrivateAccess = "true"))
     //  class UParkourComponent_Test* _parkourComp;
+
+	//cheol
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+	class UStatComponent* _StatCom;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+	class UStatWidget* _statWidget;
+
 
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Dash")
