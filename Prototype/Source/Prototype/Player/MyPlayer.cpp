@@ -83,7 +83,6 @@ void AMyPlayer::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	_StatCom->SetLevelAndInit(1);
 
 }
 
