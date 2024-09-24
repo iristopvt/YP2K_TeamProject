@@ -5,14 +5,14 @@
 
 
 //cheol
+#include "Component/StatComponent.h"
+#include "Components/UniformGridPanel.h"
 #include "Components/Button.h"
 #include "Components/Image.h"
 #include "Player/MyPlayer.h"
 #include "Components/TextBlock.h"
 
-#include "Components/UniformGridPanel.h"
 
-#include "Component/StatComponent.h"
 
 void UStatWidget::NativeConstruct()
 {
@@ -31,9 +31,29 @@ void UStatWidget::NativeConstruct()
 		}
 	}
 
-	AMyPlayer* player = Cast<AMyPlayer>(GetOwningPlayerPawn());
+	if (HPUp)
+	{
+		HPUp->OnClicked.AddDynamic(this, &UStatWidget::HPUpClick);
+	}
 
+	if (MPUp)
+	{
+		MPUp->OnClicked.AddDynamic(this, &UStatWidget::MpUpClick);
+	}
 
+	if (STRUp)
+	{
+		STRUp->OnClicked.AddDynamic(this, &UStatWidget::STRUpClick);
+
+	}
+	if (DEXUp)
+	{
+		DEXUp->OnClicked.AddDynamic(this, &UStatWidget::DEXUpClick);
+	}
+	if (INTUp)
+	{
+		INTUp->OnClicked.AddDynamic(this, &UStatWidget::INTUpClick);
+	}
 }
 
 void UStatWidget::PlLevelUpdate(int32 Level)
@@ -92,13 +112,140 @@ void UStatWidget::BonusPointUpdate(int32 BonusPoint)
 	}
 }
 
+
+void UStatWidget::UpdateStatDisplay()
+{
+	AMyPlayer* player = Cast<AMyPlayer>(GetOwningPlayerPawn());
+
+	if (player && player->_StatCom)
+	{
+		HPUpdate(player->_StatCom->GetMaxHp());
+		MPUpdate(player->_StatCom->GetMaxMp());
+		STRUpdate(player->_StatCom->GetStr());
+		DEXUpdate(player->_StatCom->GetDex());
+		INTUpdate(player->_StatCom->GetInt());
+		BonusPointUpdate(player->_StatCom->GetBonusPoint());
+	}
+}
+
 void UStatWidget::HPDownClick()
 {
 	
+	AMyPlayer* player = Cast<AMyPlayer>(GetOwningPlayerPawn());
+
+	if (player && player->_StatCom)
+	{
+		int32 plMaxHp = player->_StatCom->GetMaxHp();
+		int32 BonusPoints = player->_StatCom->GetBonusPoint();
+	
+	}
 }
+
 
 void UStatWidget::HPUpClick()
 {
-	
+
+	AMyPlayer* player = Cast<AMyPlayer>(GetOwningPlayerPawn());
+
+	if (player && player->_StatCom)
+	{
+		int32 plMaxHp = player->_StatCom->GetMaxHp();
+		int32 BonusPoints = player->_StatCom->GetBonusPoint();
+
+		if (BonusPoints > 0)
+		{
+			player->_StatCom->SetMaxHp(plMaxHp + 10);
+			player->_StatCom->SetBonusPoint(BonusPoints - 1);
+		}
+		UpdateStatDisplay();
+
+
+	}
 }
 
+void UStatWidget::MpUpClick()
+{
+	AMyPlayer* player = Cast<AMyPlayer>(GetOwningPlayerPawn());
+
+	if (player && player->_StatCom)
+	{
+		int32 plMaxMp = player->_StatCom->GetMaxMp();
+		int32 BonusPoints = player->_StatCom->GetBonusPoint();
+
+		if (BonusPoints > 0)
+		{
+			player->_StatCom->SetMaxMp(plMaxMp + 10);
+			player->_StatCom->SetBonusPoint(BonusPoints - 1);
+		}
+		UpdateStatDisplay();
+
+
+	}
+}
+
+
+void UStatWidget::STRUpClick()
+{
+	AMyPlayer* player = Cast<AMyPlayer>(GetOwningPlayerPawn());
+	UE_LOG(LogTemp, Error, TEXT("click Errow"));
+
+	if (player && player->_StatCom)
+	{
+		int32 plStr = player->_StatCom->GetStr();
+		int32 BonusPoints = player->_StatCom->GetBonusPoint();
+
+		if (BonusPoints > 0)
+		{
+			player->_StatCom->SetStr(plStr + 1);
+			player->_StatCom->SetBonusPoint(BonusPoints - 1);
+		}
+		// 클릭마다 ui 업데이트
+		UpdateStatDisplay();
+		//UpdateStatDisplay();
+		UE_LOG(LogTemp, Error, TEXT("test Errow"));
+	}
+}
+
+void UStatWidget::DEXUpClick()
+{
+	AMyPlayer* player = Cast<AMyPlayer>(GetOwningPlayerPawn());
+	UE_LOG(LogTemp, Error, TEXT("click Errow"));
+
+	if (player && player->_StatCom)
+	{
+		int32 StatDex = player->_StatCom->GetDex();
+		int32 StatBonusPoints = player->_StatCom->GetBonusPoint();
+
+		if (StatBonusPoints > 0)
+		{
+			player->_StatCom->SetDex(StatDex + 1);
+			player->_StatCom->SetBonusPoint(StatBonusPoints - 1);
+		}
+		// 클릭마다 ui 업데이트
+		UpdateStatDisplay();
+		//UpdateStatDisplay();
+		UE_LOG(LogTemp, Error, TEXT("test Errow"));
+	}
+}
+
+void UStatWidget::INTUpClick()
+{
+	AMyPlayer* player = Cast<AMyPlayer>(GetOwningPlayerPawn());
+	UE_LOG(LogTemp, Error, TEXT("click Errow"));
+
+	if (player && player->_StatCom)
+	{
+		int32 StatInt = player->_StatCom->GetInt();
+		int32 StatBonusPoints = player->_StatCom->GetBonusPoint();
+
+		if (StatBonusPoints > 0)
+		{
+			player->_StatCom->SetInt(StatInt + 1);
+			player->_StatCom->SetBonusPoint(StatBonusPoints - 1);
+		}
+		// 클릭마다 ui 업데이트
+		UpdateStatDisplay();
+		//UpdateStatDisplay();
+		UE_LOG(LogTemp, Error, TEXT("test Errow"));
+	}
+}

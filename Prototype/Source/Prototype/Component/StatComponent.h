@@ -70,20 +70,28 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+	/*void SetStat();*/
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	int32 GetCurHp() { return _curHp; }
+	int32 GetMaxHp() { return _maxHp; }
 	int32 GetLevel() { return _level; }
 	int32 GetExp() { return _curExp; }
 	int32 GetCurMp() { return _curMp; }
+	int32 GetMaxMp() { return _maxMp; }
 	//test
 	int32 GetStr()  { return _str; }
 	int32 GetDex()  { return _dex; }
 	int32 GetInt()  { return _int; }
 	int32 GetBonusPoint() { return _bonusPoint; }
+
 	void SetMaxHp(int32 newMaxHp);
-	void SetBonusPoint(int32 Bp);
+	void SetMaxMp(int32 newMaxMp);
+	void SetBonusPoint(int32 newBp);
+	void SetStr(int32 newstr);
+	void SetDex(int32 newdex);
+	void SetInt(int32 newint);
 	float HpRatio() { return _curHp / (float)_maxHp; }
 
 

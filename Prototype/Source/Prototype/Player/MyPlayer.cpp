@@ -66,6 +66,13 @@ AMyPlayer::AMyPlayer()
 void AMyPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+	
+
+	if (_statWidget)
+	{
+		_statWidget->AddToViewport();
+		_statWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
 
 	AMyPlayerController *MyController = Cast<AMyPlayerController>(GetController());
 	if (MyController != nullptr)
@@ -75,11 +82,7 @@ void AMyPlayer::BeginPlay()
 	SkillOnCooldown.Init(false, 4);
 	Equipment.Init(nullptr,6);
 
-	if (_statWidget)
-	{
-		_statWidget->AddToViewport();
-		_statWidget->SetVisibility(ESlateVisibility::Hidden);
-	}
+
 
 	
 
@@ -278,8 +281,8 @@ void AMyPlayer::StatUIOpen(const FInputActionValue& value)
 		else
 		{
 		
-			_statWidget->HPUpdate(_StatCom->GetCurHp());
-			_statWidget->MPUpdate(_StatCom->GetCurMp());
+			_statWidget->HPUpdate(_StatCom->GetMaxHp());
+			_statWidget->MPUpdate(_StatCom->GetMaxMp());
 			_statWidget->STRUpdate(_StatCom->GetStr());
 			_statWidget->DEXUpdate(_StatCom->GetDex());
 			_statWidget->INTUpdate(_StatCom->GetInt());

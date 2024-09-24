@@ -48,6 +48,33 @@ void UStatComponent::BeginPlay()
 }
 
 
+//void UStatComponent::SetStat()
+//{
+//	// 무슨 문제? 
+//	if (StatDataTable != nullptr)
+//	{
+//		TArray<FMyStatData*> AllRows;
+//		StatDataTable->GetAllRows(TEXT(""), AllRows);
+//
+//		if (AllRows.IsValidIndex(_level - 1)) 
+//		{
+//			const FMyStatData& Data = *AllRows[_level - 1];
+//
+//		
+//			if (&Data != nullptr) 
+//			{
+//				_maxHp = Data.MaxHP;
+//				_curHp = _maxHp;
+//				_maxMp = Data.MaxMP;
+//				_curMp = _maxMp;
+//				_str = Data.STR;
+//				_dex = Data.DEX;
+//				_int = Data.INT;
+//				
+//			}
+//		}
+//	}
+//}
 
 // Called every frame
 void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -62,13 +89,70 @@ void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 
 void UStatComponent::SetMaxHp(int32 newMaxHp)
 {
-	_maxHp = FMath::Clamp(newMaxHp, 0, 100);
+	TArray<FMyStatData*> AllRows;
+	StatDataTable->GetAllRows(TEXT(""), AllRows);
+
+	const FMyStatData& Data = *AllRows[_level - 1];
+
+	_maxHp = Data.MaxHP;
+	_maxHp = FMath::Clamp(newMaxHp, 0, 10000);
 
 }
 
-void UStatComponent::SetBonusPoint(int32 Bp)
+void UStatComponent::SetMaxMp(int32 newMaxMp)
 {
+	TArray<FMyStatData*> AllRows;
+	StatDataTable->GetAllRows(TEXT(""), AllRows);
 
+	const FMyStatData& Data = *AllRows[_level - 1];
+
+	_maxMp = Data.MaxMP;
+	_maxMp = FMath::Clamp(newMaxMp, 0, 10000);
+
+}
+
+void UStatComponent::SetBonusPoint(int32 newBp)
+{
+	TArray<FMyStatData*> AllRows;
+	StatDataTable->GetAllRows(TEXT(""), AllRows);
+
+		const FMyStatData& Data = *AllRows[_level - 1];
+
+		_bonusPoint = Data.BonusPoint;
+		_bonusPoint = FMath::Clamp(newBp, 0, 10);
+}
+
+void UStatComponent::SetStr(int32 newstr)
+{
+	TArray<FMyStatData*> AllRows;
+	StatDataTable->GetAllRows(TEXT(""), AllRows);
+
+	const FMyStatData& Data = *AllRows[_level - 1];
+
+	_str = Data.STR;
+	_str = FMath::Clamp(newstr, 0, 100);
+}
+
+void UStatComponent::SetDex(int32 newdex)
+{
+	TArray<FMyStatData*> AllRows;
+	StatDataTable->GetAllRows(TEXT(""), AllRows);
+
+	const FMyStatData& Data = *AllRows[_level - 1];
+
+	_dex = Data.DEX;
+	_dex = FMath::Clamp(newdex, 0, 100);
+}
+
+void UStatComponent::SetInt(int32 newint)
+{
+	TArray<FMyStatData*> AllRows;
+	StatDataTable->GetAllRows(TEXT(""), AllRows);
+
+	const FMyStatData& Data = *AllRows[_level - 1];
+
+	_int = Data.INT;
+	_int = FMath::Clamp(newint, 0, 100);
 }
 
 void UStatComponent::SetHp(int32 hp)

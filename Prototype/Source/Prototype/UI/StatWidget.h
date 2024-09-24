@@ -25,17 +25,27 @@ public:
 	TArray<class UButton*> _slotBtns;
 	TArray<class UTextBlock*> _slotBtnText;
 	
-
+	// 현재 Button, Textblock slotGrid 산하에 있음 
 	//button
+	UPROPERTY(meta = (BindWidget))
 	class UButton* HPDown;
+	UPROPERTY(meta = (BindWidget))
 	class UButton* HPUp;
+	UPROPERTY(meta = (BindWidget))
 	class UButton* MPDown;
+	UPROPERTY(meta = (BindWidget))
 	class UButton* MPUp;
+	UPROPERTY(meta = (BindWidget))
 	class UButton* STRDown;
+	UPROPERTY(meta = (BindWidget))
 	class UButton* STRUp;
+	UPROPERTY(meta = (BindWidget))
 	class UButton* DEXDown;
+	UPROPERTY(meta = (BindWidget))
 	class UButton* DEXUp;
+	UPROPERTY(meta = (BindWidget))
 	class UButton* INTDown;
+	UPROPERTY(meta = (BindWidget))
 	class UButton* INTUp;
 
 	// stat Num
@@ -70,16 +80,26 @@ public:
 	void INTUpdate(int32 INT);
 	UFUNCTION(BlueprintCallable)
 	void BonusPointUpdate(int32 BonusPoint);
-	
+
+	void UpdateStatDisplay();
 	
 	void HPDownClick();
+	UFUNCTION()
 	void HPUpClick();
 	void MPDownClick();
+	UFUNCTION()
 	void MpUpClick();
 	void STRDownClick();
+	UFUNCTION()
 	void STRUpClick();
 	void DEXDownClick();
+	UFUNCTION()
 	void DEXUpClick();
 	void INTDownClick();
+	UFUNCTION()
 	void INTUpClick();
+
+	
+
+
 };
