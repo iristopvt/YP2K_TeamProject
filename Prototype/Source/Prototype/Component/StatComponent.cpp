@@ -11,8 +11,28 @@ UStatComponent::UStatComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+	static ConstructorHelpers::FObjectFinder<UDataTable> StatData
+	(TEXT("/Script/Engine.DataTable'/Game/Data/StatDataTable_test.StatDataTable_test'"));
+
+	if (StatData.Succeeded())
+	{
+		StatDataTable = StatData.Object;
+
+	}
+
+	// 임시 게임인스턴스 아직 구현전이라 임시로 작성 
+	_level = 1; 
+	_maxHp = 100; 
+	_curHp = _maxHp; 
+	_maxMp = 50; 
+	_curMp = _maxMp; 
+	_str = 10; 
+	_dex = 10; 
+	_int = 10; 
+	_bonusPoint = 3;
 }
+
+
 
 
 // Called when the game starts
@@ -21,8 +41,12 @@ void UStatComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
+
+
 	
+
 }
+
 
 
 // Called every frame
@@ -36,6 +60,16 @@ void UStatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 
 
 
+void UStatComponent::SetMaxHp(int32 newMaxHp)
+{
+	_maxHp = FMath::Clamp(newMaxHp, 0, 100);
+
+}
+
+void UStatComponent::SetBonusPoint(int32 Bp)
+{
+
+}
 
 void UStatComponent::SetHp(int32 hp)
 {
@@ -119,4 +153,34 @@ void UStatComponent::AddExp(int32 amount)
 	float ratio = EXpRatio();
 	_PlEXPDelegate.Broadcast(ratio);
 }
+
+void UStatComponent::SetLevelInit(int32 level)
+{
+	_level = level;
+	if (StatDataTable != nullptr)
+	{
+		TArray<FMyStatData*> AllRows;
+		StatDataTable->GetAllRows(TEXT(""), AllRows);
+
+		if (AllRows.IsValidIndex(_level - 1))
+		{
+			const FMyStatData& Data = *AllRows[_level - 1];
+
+
+			if (&Data != nullptr)
+			{
+				_maxHp = Data.MaxHP;
+				_curHp = _maxHp;
+				_maxMp = Data.MaxMP;
+				_curMp = _maxMp;
+				_str = Data.STR;
+				_dex = Data.DEX;
+				_int = Data.INT;
+				_bonusPoint = Data.BonusPoint;
+
+			}
+		}
+	}
+}
+
 

@@ -22,10 +22,10 @@ struct FMyStatData : public FTableRowBase
 	int32 level;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 maxHP;
+	int32 MaxHP;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 maxMP;
+	int32 MaxMP;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 STR;
@@ -44,12 +44,12 @@ struct FMyStatData : public FTableRowBase
 
 	FMyStatData()
 		: level(1)
-		, maxHP(100)
-		, maxMP(50)
+		, MaxHP(100)
+		, MaxMP(50)
 		, STR(10)
 		, DEX(10)
 		, INT(10)
-		,BonusPoint(0)
+		,BonusPoint(3)
 		,EXP(100) {}
 
 };
@@ -63,6 +63,8 @@ public:
 	// Sets default values for this component's properties
 	UStatComponent();
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Item")
+	TArray<FMyStatData> _statData;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -75,7 +77,13 @@ public:
 	int32 GetLevel() { return _level; }
 	int32 GetExp() { return _curExp; }
 	int32 GetCurMp() { return _curMp; }
-
+	//test
+	int32 GetStr()  { return _str; }
+	int32 GetDex()  { return _dex; }
+	int32 GetInt()  { return _int; }
+	int32 GetBonusPoint() { return _bonusPoint; }
+	void SetMaxHp(int32 newMaxHp);
+	void SetBonusPoint(int32 Bp);
 	float HpRatio() { return _curHp / (float)_maxHp; }
 
 
@@ -88,6 +96,7 @@ public:
 	void AddAttackDamage(float amount);
 	void AddExp(int32 amount);
 
+	void SetLevelInit(int32 level);
 
 	bool IsDead() { return _curHp <= 0; }
 
@@ -98,7 +107,10 @@ public:
 	PlMP _PlMPDelegate;
 	PIEXP _PlEXPDelegate;
 	PILevel _PILevelDelegate;
-	FMyStatData* data;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "DataTable")
+	UDataTable* StatDataTable;
+
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = true))
@@ -115,6 +127,15 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = true))
 	int32 _maxMp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = true))
+	int32 _str;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = true))
+	int32 _dex;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = true))
+	int32 _int;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Stat, meta = (AllowPrivateAccess = true))
 	int32 _attackDamage;

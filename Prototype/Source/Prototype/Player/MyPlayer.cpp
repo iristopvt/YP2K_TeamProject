@@ -14,6 +14,9 @@
 #include "UI/StatWidget.h"
 #include "Components/WidgetComponent.h"
 
+//te
+ #include "GameFramework/Actor.h"
+
 // Sets default values
 AMyPlayer::AMyPlayer()
 {
@@ -48,7 +51,9 @@ AMyPlayer::AMyPlayer()
 	{
 		_statWidget = CreateWidget<UStatWidget>(GetWorld(), StatClass.Class);
 	}
+
 	
+
 
 	_dashDistance = 1000.f;
 	_dashSpeed = 3000.f;
@@ -76,6 +81,7 @@ void AMyPlayer::BeginPlay()
 		_statWidget->SetVisibility(ESlateVisibility::Hidden);
 	}
 
+	
 
 }
 
@@ -83,7 +89,10 @@ void AMyPlayer::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-
+	if (_StatCom)
+	{
+		_StatCom->SetLevelInit(1);
+	}
 }
 
 // Called every frame
@@ -94,6 +103,8 @@ void AMyPlayer::Tick(float DeltaTime)
 	{
 		PerformDash(DeltaTime);
 	}
+
+
 }
 
 // Called to bind functionality to input
@@ -266,6 +277,14 @@ void AMyPlayer::StatUIOpen(const FInputActionValue& value)
 		}
 		else
 		{
+		
+			_statWidget->HPUpdate(_StatCom->GetCurHp());
+			_statWidget->MPUpdate(_StatCom->GetCurMp());
+			_statWidget->STRUpdate(_StatCom->GetStr());
+			_statWidget->DEXUpdate(_StatCom->GetDex());
+			_statWidget->INTUpdate(_StatCom->GetInt());
+			_statWidget->BonusPointUpdate(_StatCom->GetBonusPoint());
+			_statWidget->PlLevelUpdate(_StatCom->GetLevel());
 			_statWidget->SetVisibility(ESlateVisibility::Visible);
 
 		}

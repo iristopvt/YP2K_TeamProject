@@ -113,13 +113,13 @@ public:
     //  class UParkourComponent_Test* _parkourComp;
 
 	//cheol
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Stat, meta = (AllowPrivateAccess = "true"))
 	class UStatComponent* _StatCom;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = UI, meta = (AllowPrivateAccess = "true"))
 	class UStatWidget* _statWidget;
 
-
+	struct FMyStatData* testdata;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category = "Dash")
 	float _dashDistance;

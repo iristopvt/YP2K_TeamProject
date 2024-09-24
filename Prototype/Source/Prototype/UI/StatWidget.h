@@ -17,6 +17,15 @@ class PROTOTYPE_API UStatWidget : public UUserWidget
 public:
 	virtual void NativeConstruct() override;
 
+	//te
+	UPROPERTY(meta = (BindWidget))
+	class UUniformGridPanel* SlotGrid;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<class UButton*> _slotBtns;
+	TArray<class UTextBlock*> _slotBtnText;
+	
+
 	//button
 	class UButton* HPDown;
 	class UButton* HPUp;
@@ -30,21 +39,37 @@ public:
 	class UButton* INTUp;
 
 	// stat Num
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* HPNum;
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* MPNum;
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* STRNum;
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* DEXNum;
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* INTNum;
-	
-	class UTextBlock* PlName;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* BonusNum;
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* PlLevel;
 
+	class UTextBlock* PlName;
 
+	UFUNCTION(BlueprintCallable)
+	void PlLevelUpdate(int32 Level);
+	UFUNCTION(BlueprintCallable)
 	void HPUpdate(int32 HP);
+	UFUNCTION(BlueprintCallable)
 	void MPUpdate(int32 MP);
+	UFUNCTION(BlueprintCallable)
 	void STRUpdate(int32 STR);
+	UFUNCTION(BlueprintCallable)
 	void DEXUpdate(int32 DEX);
+	UFUNCTION(BlueprintCallable)
 	void INTUpdate(int32 INT);
+	UFUNCTION(BlueprintCallable)
+	void BonusPointUpdate(int32 BonusPoint);
 	
 	
 	void HPDownClick();
@@ -57,5 +82,4 @@ public:
 	void DEXUpClick();
 	void INTDownClick();
 	void INTUpClick();
-
 };
